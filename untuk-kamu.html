@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Untuk Kamu</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --cream: #F5EFE6; --warm: #E8D9C5; --brown-light: #C4A882;
+    --brown: #8B6E52; --brown-dark: #5C4033; --ink: #2C1A0E;
+    --gold: #C9A84C; --rose: #C97B6B;
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--cream); color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden; min-height: 100vh;
+  }
+  body::before {
+    content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 1000;
+    opacity: 0.4;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+  }
+
+  /* Hero */
+  #hero {
+    min-height: 100vh; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 3rem 2rem; text-align: center; position: relative; overflow: hidden;
+  }
+  #hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(201,168,76,0.08) 0%, transparent 70%),
+                radial-gradient(ellipse 50% 80% at 20% 80%, rgba(201,123,107,0.07) 0%, transparent 60%);
+  }
+  .candle { font-size: 2.5rem; margin-bottom: 2.5rem; display: block; animation: flicker 3s ease-in-out infinite; }
+  @keyframes flicker {
+    0%,100% { transform: scale(1) rotate(-1deg); opacity:1; }
+    25% { transform: scale(1.05) rotate(1deg); opacity:0.9; }
+    50% { transform: scale(0.97) rotate(-0.5deg); opacity:1; }
+    75% { transform: scale(1.02) rotate(1.5deg); opacity:0.95; }
+  }
+  .hero-label {
+    font-size: 0.7rem; letter-spacing: 0.35em; text-transform: uppercase;
+    color: var(--brown); margin-bottom: 1.8rem;
+    opacity: 0; animation: fadeUp 1s ease 0.3s forwards;
+  }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.8rem, 8vw, 5.5rem); font-weight: 300; line-height: 1.15;
+    color: var(--brown-dark); margin-bottom: 1.5rem;
+    opacity: 0; animation: fadeUp 1s ease 0.5s forwards;
+  }
+  .hero-title em { font-style: italic; color: var(--rose); }
+  .hero-sub {
+    font-family: 'Lora', serif; font-size: clamp(1rem, 2.5vw, 1.2rem);
+    font-style: italic; color: var(--brown); max-width: 500px; line-height: 1.8;
+    opacity: 0; animation: fadeUp 1s ease 0.8s forwards;
+  }
+  .scroll-hint {
+    position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+    opacity: 0; animation: fadeUp 1s ease 1.5s forwards;
+  }
+  .scroll-hint span { font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--brown-light); }
+  .scroll-line {
+    width: 1px; height: 40px;
+    background: linear-gradient(to bottom, var(--brown-light), transparent);
+    animation: scrollPulse 2s ease infinite;
+  }
+  @keyframes scrollPulse {
+    0%,100% { opacity: 0.4; transform: scaleY(1); }
+    50% { opacity: 1; transform: scaleY(1.1); }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Content */
+  #content { max-width: 720px; margin: 0 auto; padding: 5rem 2rem 8rem; }
+  .section {
+    margin-bottom: 6rem; opacity: 0; transform: translateY(30px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+  .section.visible { opacity: 1; transform: translateY(0); }
+
+  .divider { display: flex; align-items: center; gap: 1rem; margin-bottom: 2.5rem; }
+  .divider-line { flex: 1; height: 1px; background: linear-gradient(to right, transparent, var(--brown-light), transparent); }
+  .divider-symbol { color: var(--gold); font-size: 1rem; }
+
+  .section-number {
+    font-family: 'Cormorant Garamond', serif; font-size: 0.75rem; font-weight: 300;
+    letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold);
+    margin-bottom: 1.2rem; display: block;
+  }
+  .section-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 4.5vw, 2.8rem); font-weight: 400; line-height: 1.25;
+    color: var(--brown-dark); margin-bottom: 1.8rem;
+  }
+  .section-heading em { font-style: italic; color: var(--rose); }
+
+  p {
+    font-family: 'Lora', serif; font-size: clamp(1rem, 2vw, 1.12rem);
+    line-height: 1.95; color: #4A3728; margin-bottom: 1.4rem;
+  }
+  .pull-quote {
+    border-left: 3px solid var(--gold); padding: 1.5rem 2rem; margin: 3rem 0;
+    background: rgba(201,168,76,0.05); border-radius: 0 8px 8px 0;
+  }
+  .pull-quote p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.2rem, 3vw, 1.6rem); font-style: italic; font-weight: 400;
+    color: var(--brown-dark); line-height: 1.7; margin: 0;
+  }
+
+  .breath-box {
+    text-align: center; padding: 4rem 2rem; margin: 4rem 0;
+    border: 1px solid var(--warm); border-radius: 16px;
+    background: rgba(232,217,197,0.3); position: relative; overflow: hidden;
+  }
+  .breath-box::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at center, rgba(201,168,76,0.06) 0%, transparent 70%);
+  }
+  .breath-circle {
+    width: 80px; height: 80px; border-radius: 50%; border: 2px solid var(--gold);
+    margin: 0 auto 1.5rem; animation: breathe 6s ease-in-out infinite; position: relative;
+  }
+  .breath-circle::after {
+    content: ''; position: absolute; inset: 6px; border-radius: 50%;
+    background: rgba(201,168,76,0.15); animation: breathe 6s ease-in-out infinite 0.2s;
+  }
+  @keyframes breathe {
+    0%,100% { transform: scale(1); opacity: 0.6; }
+    50% { transform: scale(1.3); opacity: 1; }
+  }
+  .breath-text {
+    font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--brown); margin-bottom: 1rem;
+  }
+  .breath-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.1rem, 2.5vw, 1.4rem); font-style: italic;
+    color: var(--brown-dark); line-height: 1.7; max-width: 500px; margin: 0 auto;
+  }
+
+  .final {
+    text-align: center; padding: 5rem 2rem; border-radius: 24px; margin-top: 2rem;
+    background: linear-gradient(to bottom, transparent, rgba(232,217,197,0.4));
+  }
+  .final-icon { font-size: 2rem; margin-bottom: 2rem; display: block; animation: pulse 3s ease infinite; }
+  @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.08); } }
+  .final-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 300;
+    color: var(--brown-dark); margin-bottom: 1.5rem; line-height: 1.3;
+  }
+  .final-title em { font-style: italic; color: var(--rose); }
+  .final p { text-align: center; max-width: 480px; margin: 0 auto 1.2rem; font-size: 1.05rem; }
+  .affirmations { display: flex; flex-wrap: wrap; gap: 0.6rem; margin: 2rem 0; justify-content: center; }
+  .affirmation-tag {
+    font-family: 'Lora', serif; font-style: italic; font-size: 0.88rem;
+    color: var(--brown-dark); background: rgba(201,168,76,0.1);
+    border: 1px solid rgba(201,168,76,0.3); padding: 0.4rem 1rem;
+    border-radius: 100px; transition: background 0.3s; cursor: default;
+  }
+  .affirmation-tag:hover { background: rgba(201,168,76,0.2); }
+  .sign { color: var(--brown); font-style: italic; font-size: 0.95rem; }
+
+  @media (max-width: 600px) {
+    #content { padding: 3rem 1.5rem 6rem; }
+    .section { margin-bottom: 4rem; }
+  }
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<script>
+// ─── DATA ────────────────────────────────────────────────────────────────────
+
+const hero = {
+  label: 'sebuah surat kecil',
+  title: 'Untuk <em>Kamu.</em>',
+  sub: 'Dan selama kamu masih di sini, ceritamu belum selesai.'
+};
+
+const sections = [
+  {
+    number: 'I',
+    heading: 'Kelelahan bukan tanda <em>kelemahan.</em>',
+    paragraphs: [
+      'Kalau kamu sampai di titik ini — titik di mana napas terasa berat, di mana bangun pagi saja sudah butuh keberanian — itu bukan karena kamu lemah. Itu justru karena kamu sudah berjuang sangat keras, jauh lebih keras dari yang orang lain tahu, mungkin bahkan lebih keras dari yang kamu sendiri sadari.',
+      'Lelah yang kamu rasakan adalah bukti. Bukti bahwa kamu sudah mencoba. Berulang kali. Bahwa kamu tidak langsung menyerah ketika semuanya mulai terasa berat — kamu terus berjalan, meskipun dalam keadaan paling remuk sekalipun.'
+    ],
+    quote: 'Orang yang paling kuat bukan mereka yang tidak pernah jatuh. Tapi mereka yang sudah jatuh berkali-kali dan masih memilih untuk bangun, meski lutut gemetar.',
+    after: 'Kamu tidak harus terlihat baik-baik saja. Kamu tidak harus selalu kuat. Boleh capek. Boleh nangis sampai habis. Boleh diam sejenak dan tidak tahu harus bagaimana. Semua itu manusiawi — dan kamu, bagaimanapun keadaanmu sekarang, tetap layak mendapat ruang untuk itu semua.'
+  },
+  {
+    number: 'II',
+    heading: 'Tentang rasa ingin <em>menyerah.</em>',
+    paragraphs: [
+      'Boleh jujur: ada bagian kecil dari dirimu yang ingin berhenti. Berhenti berusaha. Berhenti berharap. Berhenti pura-pura kuat. Dan kamu tahu apa? Itu wajar. Itu tidak membuat kamu jahat. Itu tidak membuat kamu gagal. Itu hanya artinya kamu manusia yang sudah membawa beban terlalu banyak, terlalu lama, terlalu sendirian.',
+      'Menyerah dan berhenti sejenak itu berbeda. Berhenti sejenak artinya kamu mengakui bahwa tubuh dan hatimu butuh jeda — dan itu bijak. Itu perlu. Tidak ada yang bisa lari maraton tanpa pernah berhenti minum air. Jeda bukan kekalahan. Jeda adalah bagian dari perjalanan.',
+      'Yang perlu kamu tahu: pikiran yang ingin menyerah itu datang dari bagian dirimu yang kelelahan, bukan dari bagian dirimu yang paling dalam. Bagian yang paling dalam dari dirimu — yang masih di sini, yang masih membaca ini — dia masih ingin mencoba. Dia masih mencari alasan. Dan itu cukup. Untuk sekarang, itu lebih dari cukup.'
+    ]
+  },
+  {
+    type: 'breath',
+    breathText: 'Tarik napas pelan-pelan',
+    breathQuote: '"Kamu tidak harus menyelesaikan semuanya hari ini. Hari ini, cukup ada saja dulu."'
+  },
+  {
+    number: 'III',
+    heading: 'Sesuatu yang mungkin <em>kamu lupa.</em>',
+    paragraphs: [
+      'Di tengah semua keributan dalam kepalamu — semua suara yang bilang kamu tidak cukup baik, tidak cukup kuat, tidak cukup berarti — ada satu hal yang sering terlupakan: kamu sudah melewati 100% dari hari-hari terburukmu.',
+      'Semua malam yang terasa mustahil untuk dilewati — kamu lewati. Semua hari yang terasa akan menghancurkan segalanya — tidak menghancurkan segalanya. Kamu masih di sini. Bukan kebetulan. Bukan karena hidup tiba-tiba jadi mudah. Tapi karena ada sesuatu dalam dirimu yang memilih untuk bertahan.'
+    ],
+    quote: 'Mungkin hidupmu tidak terlihat seperti yang kamu bayangkan. Tapi kamu masih hidup — dan itu, dengan sendirinya, adalah bentuk keberanian yang paling murni.',
+    after: 'Ingat juga: kamu tidak harus melewati semua ini sendirian. Meminta bantuan bukan tanda kelemahan — justru sebaliknya. Dibutuhkan keberanian luar biasa untuk berkata, "aku sedang tidak baik-baik saja dan aku butuh seseorang." Itu bukan menyerah. Itu justru memilih dirimu sendiri.'
+  },
+  {
+    number: 'IV',
+    heading: 'Tentang hari ini, dan <em>hari esok.</em>',
+    paragraphs: [
+      'Kamu tidak perlu memperbaiki semuanya hari ini. Kamu tidak harus menemukan makna hidupmu hari ini. Kamu tidak harus bangkit dari keterpurukan hari ini. Cukup satu hal kecil: bertahan.',
+      'Minum air. Makan sesuatu. Tidur kalau tubuhmu minta. Hubungi satu orang yang kamu percaya. Langkah kecil itu terdengar sepele, tapi bagi seseorang yang sedang kelelahan, itu adalah hal yang sangat besar. Dan kamu berhak bangga untuk itu.',
+      'Besok mungkin tidak akan sempurna. Mungkin masih akan berat. Tapi ada kemungkinan — sekecil apapun — bahwa sesuatu akan berubah. Secercah cahaya yang tidak kamu kira ada. Percakapan yang tiba-tiba membuat napas lebih ringan. Momen kecil yang mengingatkan bahwa hidup, kadang, masih bisa terasa indah.',
+      'Dan kamu tidak akan melihat momen itu kalau kamu tidak ada di sana untuk mengalaminya.'
+    ]
+  },
+  {
+    type: 'final',
+    icon: '🌱',
+    title: 'Kamu <em>berharga,</em><br>persis seperti sekarang.',
+    paragraphs: [
+      'Bukan ketika kamu sudah sembuh. Bukan ketika kamu sudah berhasil. Bukan ketika kamu sudah kuat kembali. Sekarang. Dalam kondisimu yang paling remuk, paling lelah, paling hilang arah sekalipun — kamu tetap berharga.',
+      'Ada orang yang hidupnya berbeda karena kamu ada. Ada kenangan yang hanya bisa dibuat bersamamu. Ada masa depan yang menunggumu, meskipun kamu belum bisa melihatnya dari sini.'
+    ],
+    affirmations: [
+      'Kamu berhak untuk lelah',
+      'Kamu berhak untuk menangis',
+      'Kamu berhak untuk jeda',
+      'Kamu berhak untuk sembuh',
+      'Kamu berhak untuk bahagia',
+      'Kamu berhak untuk tetap ada'
+    ],
+    closing: 'Jadi tolong, tetaplah ada. Satu hari lagi. Satu jam lagi. Satu napas lagi. Itu cukup. Kamu cukup.',
+    sign: '— Untuk kamu yang membaca ini sampai selesai. 🤍'
+  }
+];
+
+// ─── RENDERERS ───────────────────────────────────────────────────────────────
+
+function renderDivider() {
+  return `<div class="divider">
+    <div class="divider-line"></div>
+    <span class="divider-symbol">✦</span>
+    <div class="divider-line"></div>
+  </div>`;
+}
+
+function renderHero(data) {
+  return `
+  <section id="hero">
+    <span class="candle">🕯️</span>
+    <p class="hero-label">${data.label}</p>
+    <h1 class="hero-title">${data.title}</h1>
+    <p class="hero-sub">${data.sub}</p>
+    <div class="scroll-hint">
+      <span>baca pelan-pelan</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>`;
+}
+
+function renderBreath(s) {
+  return `<div class="section">
+    <div class="breath-box">
+      <div class="breath-circle"></div>
+      <p class="breath-text">${s.breathText}</p>
+      <p class="breath-quote">${s.breathQuote}</p>
+    </div>
+  </div>`;
+}
+
+function renderFinal(s) {
+  const tags = s.affirmations.map(a => `<span class="affirmation-tag">${a}</span>`).join('');
+  const paras = s.paragraphs.map(p => `<p>${p}</p>`).join('');
+  return `<div class="section final">
+    <span class="final-icon">${s.icon}</span>
+    <h2 class="final-title">${s.title}</h2>
+    ${paras}
+    <div class="affirmations">${tags}</div>
+    <p>${s.closing}</p>
+    <br>
+    <p class="sign">${s.sign}</p>
+  </div>`;
+}
+
+function renderSection(s) {
+  if (s.type === 'breath') return renderBreath(s);
+  if (s.type === 'final')  return renderFinal(s);
+
+  const paras = s.paragraphs.map(p => `<p>${p}</p>`).join('');
+  const quote = s.quote
+    ? `<div class="pull-quote"><p>"${s.quote}"</p></div>` : '';
+  const after = s.after ? `<p>${s.after}</p>` : '';
+
+  return `<div class="section">
+    ${renderDivider()}
+    <span class="section-number">${s.number}</span>
+    <h2 class="section-heading">${s.heading}</h2>
+    ${paras}
+    ${quote}
+    ${after}
+  </div>`;
+}
+
+// ─── MOUNT ───────────────────────────────────────────────────────────────────
+
+function mount() {
+  const app = document.getElementById('app');
+  const heroHTML  = renderHero(hero);
+  const bodyHTML  = sections.map(renderSection).join('\n');
+  app.innerHTML = `${heroHTML}<main id="content">${bodyHTML}</main>`;
+
+  // Scroll-reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.section').forEach(s => observer.observe(s));
+}
+
+document.addEventListener('DOMContentLoaded', mount);
+</script>
+</body>
+</html>
